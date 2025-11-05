@@ -18,13 +18,15 @@
     <view class="footer-note">内容由 AI 生成，仅供参考</view>
 
     <view class="input-bar">
-      <input
-        class="input"
+      <textarea
+        class="input textarea"
         v-model="inputValue"
         :disabled="isSending"
         placeholder="给 DeepSeek 发送消息"
-        confirm-type="send"
-        @confirm="sendMessage"
+        auto-height
+        cursor-spacing="8"
+        maxlength="-1"
+        :show-confirm-bar="false"
       />
       <view class="send-btn" :class="{ disabled: isSending }" @tap="sendMessage">
         <text v-if="!isSending" class="send-icon">➤</text>
@@ -121,7 +123,7 @@ export default {
 }
 .nav-row { display: flex; align-items: center; }
 .nav-left, .nav-right, .nav-title { height: 100%; display: flex; align-items: center; }
-.nav-left { width: 140rpx; color: #111; font-size: 40rpx; }
+.nav-left { width: 140rpx; color: #111; font-size: 40rpx; padding-left: 24rpx;}
 .nav-right { width: 140rpx; }
 .nav-title { flex: 1; text-align: center; justify-content: center; font-size: 32rpx; color: #111; }
 
@@ -168,12 +170,18 @@ export default {
 
 .input {
   flex: 1;
-  height: 72rpx;
   background-color: #f5f5f7;
   border-radius: 16rpx;
   padding: 0 24rpx;
   font-size: 28rpx;
   border: 2rpx solid #eee;
+}
+
+.textarea {
+  min-height: 72rpx;
+  line-height: 40rpx;
+  padding-top: 12rpx;
+  padding-bottom: 12rpx;
 }
 
 .send-btn {
