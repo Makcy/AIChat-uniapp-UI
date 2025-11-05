@@ -182,6 +182,8 @@ export default {
   line-height: 40rpx;
   padding-top: 12rpx;
   padding-bottom: 12rpx;
+  max-height: 240rpx;
+  overflow-y: auto;
 }
 
 .send-btn {
