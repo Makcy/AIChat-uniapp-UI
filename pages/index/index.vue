@@ -1,7 +1,13 @@
 <template>
-  <view class="page">
-    <!-- 左上角对话历史入口按钮 -->
-    <view class="history-btn" @tap="toggleHistory">☰</view>
+  <view class="page" :style="{ paddingTop: navTotalHeight + 'px' }">
+    <!-- 自定义导航栏 -->
+    <view class="navbar" :style="{ paddingTop: statusBarHeight + 'px', height: navTotalHeight + 'px' }">
+      <view class="nav-row" :style="{ height: navContentHeight + 'px' }">
+        <view class="nav-left" @tap="toggleHistory">☰</view>
+        <view class="nav-title">DeepSeek</view>
+        <view class="nav-right"></view>
+      </view>
+    </view>
     <view class="welcome">
       <view class="intro">
         <text class="intro-title">我是 DeepSeek，很高兴见到你！</text>
@@ -45,6 +51,9 @@ export default {
       inputValue: '',
       isSending: false,
       showHistory: false,
+      statusBarHeight: 0,
+      navContentHeight: 44,
+      navTotalHeight: 64,
       conversations: [
         { title: '对话 1' },
         { title: '对话 2' },
@@ -52,7 +61,27 @@ export default {
       ]
     }
   },
+  onLoad() {
+    this.initNavBar()
+  },
   methods: {
+    initNavBar() {
+      const sys = uni.getSystemInfoSync()
+      const sbh = sys.statusBarHeight || 0
+      let contentH = 44
+      let rect = null
+      try {
+        rect = typeof uni.getMenuButtonBoundingClientRect === 'function'
+          ? uni.getMenuButtonBoundingClientRect()
+          : null
+      } catch (e) { rect = null }
+      if (rect && rect.height && rect.top) {
+        contentH = rect.height + (rect.top - sbh) * 2
+      }
+      this.statusBarHeight = sbh
+      this.navContentHeight = contentH
+      this.navTotalHeight = sbh + contentH
+    },
     toggleHistory() {
       this.showHistory = !this.showHistory
     },
@@ -81,20 +110,20 @@ export default {
   flex-direction: column;
 }
 
-.history-btn {
+/* 自定义导航栏 */
+.navbar {
   position: fixed;
-  left: 20rpx;
-  top: calc(env(safe-area-inset-top) + 20rpx);
-  width: 64rpx;
-  height: 64rpx;
-  line-height: 64rpx;
-  text-align: center;
-  border-radius: 50%;
-  background-color: #eaf9ef;
-  color: #4cd964;
-  border: 2rpx solid #4cd964;
-  box-shadow: 0 6rpx 16rpx rgba(0,0,0,0.08);
+  top: 0; left: 0; right: 0;
+  display: block;
+  background-color: #fff;
+  border-bottom: 2rpx solid #f0f0f0;
+  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.04);
 }
+.nav-row { display: flex; align-items: center; }
+.nav-left, .nav-right, .nav-title { height: 100%; display: flex; align-items: center; }
+.nav-left { width: 140rpx; padding-left: 24rpx; color: #111; font-size: 40rpx; }
+.nav-right { width: 140rpx; }
+.nav-title { flex: 1; text-align: center; font-size: 32rpx; color: #111; }
 
 .welcome {
   flex: 1;
