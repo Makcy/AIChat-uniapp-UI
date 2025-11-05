@@ -1,7 +1,7 @@
 <template>
   <view class="page" :style="{ paddingTop: navTotalHeight + 'px' }">
     <!-- 自定义导航栏 -->
-    <view class="navbar" :style="{ paddingTop: statusBarHeight + 'px', height: navTotalHeight + 'px' }">
+    <view class="navbar" :style="{ paddingTop: statusBarHeight + 'px', height: navTotalHeight + 'px'}">
       <view class="nav-row" :style="{ height: navContentHeight + 'px' }">
         <view class="nav-left" @tap="toggleHistory">☰</view>
         <view class="nav-title">DeepSeek</view>
@@ -52,8 +52,8 @@ export default {
       isSending: false,
       showHistory: false,
       statusBarHeight: 0,
-      navContentHeight: 44,
-      navTotalHeight: 64,
+      navContentHeight: 40,
+      navTotalHeight: 60,
       conversations: [
         { title: '对话 1' },
         { title: '对话 2' },
@@ -78,6 +78,8 @@ export default {
       if (rect && rect.height && rect.top) {
         contentH = rect.height + (rect.top - sbh) * 2
       }
+      // 小幅缩小高度以贴近示例胶囊视觉
+      contentH = Math.max(36, Math.round(contentH - 6))
       this.statusBarHeight = sbh
       this.navContentHeight = contentH
       this.navTotalHeight = sbh + contentH
@@ -116,8 +118,6 @@ export default {
   top: 0; left: 0; right: 0;
   display: block;
   background-color: #fff;
-  border-bottom: 2rpx solid #f0f0f0;
-  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.04);
 }
 .nav-row { display: flex; align-items: center; }
 .nav-left, .nav-right, .nav-title { height: 100%; display: flex; align-items: center; }
