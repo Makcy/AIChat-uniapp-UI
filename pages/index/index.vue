@@ -121,9 +121,9 @@ export default {
 }
 .nav-row { display: flex; align-items: center; }
 .nav-left, .nav-right, .nav-title { height: 100%; display: flex; align-items: center; }
-.nav-left { width: 140rpx; padding-left: 24rpx; color: #111; font-size: 40rpx; }
+.nav-left { width: 140rpx; color: #111; font-size: 40rpx; }
 .nav-right { width: 140rpx; }
-.nav-title { flex: 1; text-align: center; font-size: 32rpx; color: #111; }
+.nav-title { flex: 1; text-align: center; justify-content: center; font-size: 32rpx; color: #111; }
 
 .welcome {
   flex: 1;
