@@ -86,7 +86,10 @@ export default {
         { role: 'assistant', content: '保持健康体重的建议有很多，您可以咨询我关于体重管理的建议。', time: Date.now() },
         { role: 'user', content: '我想知道如何保持健康的体重', time: Date.now() },
         { role: 'assistant', content: '保持健康体重的建议有很多，您可以咨询我关于体重管理的建议。', time: Date.now() },
-        
+        { role: 'user', content: '我想知道如何保持健康的体重', time: Date.now() },
+        { role: 'assistant', content: '保持健康体重的建议有很多，您可以咨询我关于体重管理的建议。', time: Date.now() },
+        { role: 'user', content: '我想知道如何保持健康的体重', time: Date.now() },
+        { role: 'assistant', content: '保持健康体重的建议有很多，您可以咨询我关于体重管理的建议。', time: Date.now() },``
       ],
       conversations: [
         { title: '对话 1' },
@@ -190,7 +193,7 @@ export default {
 }
 
 .message-list {
-  flex: 1;
+  height: 100%;
   padding: 24rpx;
   box-sizing: border-box;
 }
