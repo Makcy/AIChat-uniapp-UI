@@ -194,7 +194,7 @@ export default {
 
 .message-list {
   height: 100%;
-  padding: 24rpx;
+  padding: 24rpx 0 24rpx 24rpx;
   box-sizing: border-box;
 }
 .message-item {
@@ -202,7 +202,7 @@ export default {
 }
 .message-item + .message-item { margin-top: 16rpx; }
 .message-item.left { justify-content: flex-start; }
-.message-item.right { justify-content: flex-end; }
+.message-item.right { justify-content: flex-end; padding-right: 24rpx; }
 .message-bubble {
   max-width: 80%;
   line-height: 40rpx;
