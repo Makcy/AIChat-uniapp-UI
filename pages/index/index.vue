@@ -12,7 +12,7 @@
       <view v-if="messages.length === 0" class="welcome">
         <view class="intro">
           <text class="intro-title">我是智能助手，很高兴见到你！</text>
-          <text class="intro-sub">我可以帮你写代码、读文件、写作各种创意内容，请把你的任务交给我吧~</text>
+          <text class="intro-sub">我可以帮您规划健康饮食、解答日常疑惑。守护您的健康，我们一同努力~</text>
         </view>
       </view>
       <scroll-view v-else class="message-list" scroll-y="true">
@@ -173,13 +173,13 @@ export default {
 
 .message-list {
   flex: 1;
-  padding: 24rpx 24rpx 220rpx;
+  padding: 24rpx;
   box-sizing: border-box;
 }
 .message-item {
   display: flex;
-  margin-bottom: 16rpx;
 }
+.message-item + .message-item { margin-top: 16rpx; }
 .message-item.left { justify-content: flex-start; }
 .message-item.right { justify-content: flex-end; }
 .message-bubble {
