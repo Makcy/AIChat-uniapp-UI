@@ -8,30 +8,43 @@
         <view class="nav-right"></view>
       </view>
     </view>
-    <view class="welcome">
-      <view class="intro">
-        <text class="intro-title">我是智能助手，很高兴见到你！</text>
-        <text class="intro-sub">我可以帮你写代码、读文件、写作各种创意内容，请把你的任务交给我吧~</text>
+    <view class="content-panel">
+      <view v-if="messages.length === 0" class="welcome">
+        <view class="intro">
+          <text class="intro-title">我是智能助手，很高兴见到你！</text>
+          <text class="intro-sub">我可以帮你写代码、读文件、写作各种创意内容，请把你的任务交给我吧~</text>
+        </view>
       </view>
+      <scroll-view v-else class="message-list" scroll-y="true">
+        <view
+          v-for="(m, i) in messages"
+          :key="i"
+          :class="['message-item', m.role === 'user' ? 'right' : 'left']"
+        >
+          <view v-if="m.role === 'user'" class="message-bubble user">{{ m.content }}</view>
+          <text v-else class="message-text">{{ m.content }}</text>
+        </view>
+      </scroll-view>
     </view>
 
-    <view class="footer-note">内容由 AI 生成，仅供参考</view>
-
     <view class="input-bar">
-      <textarea
-        class="input textarea"
-        v-model="inputValue"
-        :disabled="isSending"
-        placeholder="给 智能助手 发送消息"
-        auto-height
-        cursor-spacing="8"
-        maxlength="-1"
-        :show-confirm-bar="false"
-      />
-      <view class="send-btn" :class="{ disabled: isSending || !(inputValue || '').trim().length }" @tap="sendMessage">
-        <image v-if="!isSending" class="send-icon-svg" src="/static/arrow.svg" mode="widthFix" />
-        <view v-else class="spinner"></view>
+      <view class="input-row">
+        <textarea
+          class="input textarea"
+          v-model="inputValue"
+          :disabled="isSending"
+          placeholder="给 智能助手 发送消息"
+          auto-height
+          cursor-spacing="8"
+          maxlength="-1"
+          :show-confirm-bar="false"
+        />
+        <view class="send-btn" :class="{ disabled: isSending || !(inputValue || '').trim().length }" @tap="sendMessage">
+          <image v-if="!isSending" class="send-icon-svg" src="/static/arrow.svg" mode="widthFix" />
+          <view v-else class="spinner"></view>
+        </view>
       </view>
+      <view class="footer-note">内容由 AI 生成，仅供参考</view>
     </view>
 
     <!-- 左侧滑出对话历史抽屉 -->
@@ -56,6 +69,7 @@ export default {
       statusBarHeight: 0,
       navContentHeight: 40,
       navTotalHeight: 60,
+      messages: [],
       conversations: [
         { title: '对话 1' },
         { title: '对话 2' },
@@ -98,6 +112,7 @@ export default {
       uni.showToast({ title: '发送中...', icon: 'loading', duration: 800 })
       setTimeout(() => {
         uni.showToast({ title: '已发送', icon: 'success', duration: 800 })
+        this.messages.push({ role: 'user', content: text, time: Date.now() })
         this.inputValue = ''
         this.isSending = false
       }, 800)
@@ -120,6 +135,7 @@ export default {
   top: 0; left: 0; right: 0;
   display: block;
   background-color: #fff;
+  z-index: 1000;
 }
 .nav-row { display: flex; align-items: center; }
 .nav-left, .nav-right, .nav-title { height: 100%; display: flex; align-items: center; }
@@ -134,6 +150,7 @@ export default {
   align-items: center;
   justify-content: center;
   padding: 40rpx 40rpx 220rpx;
+  box-sizing: border-box;
 }
 
 .logo {
@@ -156,6 +173,47 @@ export default {
   color: #666;
 }
 
+.message-list {
+  flex: 1;
+  padding: 24rpx 24rpx 220rpx;
+  box-sizing: border-box;
+}
+.message-item {
+  display: flex;
+  margin-bottom: 16rpx;
+}
+.message-item.left { justify-content: flex-start; }
+.message-item.right { justify-content: flex-end; }
+.message-bubble {
+  max-width: 80%;
+  line-height: 40rpx;
+  word-break: break-word;
+}
+.message-bubble.user {
+  background-color: rgba(0, 86, 30, 0.10);
+  border-radius: 16rpx;
+  padding: 12rpx 16rpx;
+  color: #111;
+  box-sizing: border-box;
+}
+.message-role {
+  font-size: 24rpx;
+  color: #999;
+  margin-right: 8rpx;
+}
+.message-text {
+  font-size: 28rpx;
+  color: #111;
+  max-width: 80%;
+  line-height: 40rpx;
+  word-break: break-word;
+}
+.content-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
 .input-bar {
   position: fixed;
   left: 0;
@@ -163,10 +221,14 @@ export default {
   bottom: 0;
   padding: 16rpx 24rpx calc(16rpx + env(safe-area-inset-bottom));
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: stretch;
   background-color: #fff;
   box-shadow: 0 -8rpx 24rpx rgba(0,0,0,0.06);
+  z-index: 1000;
+  box-sizing: border-box;
 }
+.input-row { display: flex; align-items: center; }
 
 .input {
   flex: 1;
@@ -175,6 +237,7 @@ export default {
   padding: 0 24rpx;
   font-size: 28rpx;
   border: 2rpx solid #eee;
+  box-sizing: border-box;
 }
 
 .textarea {
@@ -184,6 +247,7 @@ export default {
   padding-bottom: 12rpx;
   max-height: 240rpx;
   overflow-y: auto;
+  box-sizing: border-box;
 }
 
 .send-btn {
@@ -214,10 +278,7 @@ export default {
 @keyframes spin { from { transform: rotate(0); } to { transform: rotate(360deg); } }
 
 .footer-note {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: calc(160rpx + env(safe-area-inset-bottom));
+  margin-top: 8rpx;
   text-align: center;
   color: #999;
   font-size: 24rpx;
@@ -235,6 +296,7 @@ export default {
   transform: translateX(-100%);
   transition: transform 200ms ease;
   padding-top: calc(env(safe-area-inset-top) + 20rpx);
+  box-sizing: border-box;
 }
 .drawer-open { transform: translateX(0); }
 .drawer-mask {
@@ -246,10 +308,12 @@ export default {
   font-size: 32rpx;
   padding: 24rpx;
   color: #111;
+  box-sizing: border-box;
 }
 .drawer-list { height: 100%; }
 .drawer-item {
   padding: 24rpx;
   border-bottom: 2rpx solid #f0f0f0;
+  box-sizing: border-box;
 }
 </style>
