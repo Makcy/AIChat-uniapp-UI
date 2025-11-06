@@ -1,5 +1,5 @@
 <template>
-  <view class="page" :style="{ paddingTop: navTotalHeight + 'px' }">
+  <view class="page">
     <!-- 自定义导航栏 -->
     <view class="navbar" :style="{ paddingTop: statusBarHeight + 'px', height: navTotalHeight + 'px'}">
       <view class="nav-row" :style="{ height: navContentHeight + 'px' }">
@@ -123,7 +123,7 @@ export default {
 
 <style>
 .page {
-  min-height: 100vh;
+  height: 100vh;
   background-color: #ffffff;
   display: flex;
   flex-direction: column;
@@ -131,11 +131,9 @@ export default {
 
 /* 自定义导航栏 */
 .navbar {
-  position: fixed;
-  top: 0; left: 0; right: 0;
+  width: 100%;
   display: block;
   background-color: #fff;
-  z-index: 1000;
 }
 .nav-row { display: flex; align-items: center; }
 .nav-left, .nav-right, .nav-title { height: 100%; display: flex; align-items: center; }
@@ -212,20 +210,16 @@ export default {
   flex: 1;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .input-bar {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
   padding: 16rpx 24rpx calc(16rpx + env(safe-area-inset-bottom));
   display: flex;
   flex-direction: column;
   align-items: stretch;
   background-color: #fff;
   box-shadow: 0 -8rpx 24rpx rgba(0,0,0,0.06);
-  z-index: 1000;
   box-sizing: border-box;
 }
 .input-row { display: flex; align-items: center; }
