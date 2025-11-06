@@ -28,7 +28,7 @@
         maxlength="-1"
         :show-confirm-bar="false"
       />
-      <view class="send-btn" :class="{ disabled: isSending }" @tap="sendMessage">
+      <view class="send-btn" :class="{ disabled: isSending || !(inputValue || '').trim().length }" @tap="sendMessage">
         <image v-if="!isSending" class="send-icon-svg" src="/static/arrow.svg" mode="widthFix" />
         <view v-else class="spinner"></view>
       </view>
@@ -197,7 +197,10 @@ export default {
   justify-content: center;
   color: #fff;
 }
-.send-btn.disabled { opacity: 0.7; }
+.send-btn.disabled { 
+  background-color: rgba(0, 86, 30, 0.35);
+  pointer-events: none;
+}
 .send-icon { font-size: 40rpx; }
 .send-icon-svg { width: 60rpx; height: 60rpx; }
 .spinner {
