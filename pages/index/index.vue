@@ -4,13 +4,13 @@
     <view class="navbar" :style="{ paddingTop: statusBarHeight + 'px', height: navTotalHeight + 'px'}">
       <view class="nav-row" :style="{ height: navContentHeight + 'px' }">
         <view class="nav-left" @tap="toggleHistory">☰</view>
-        <view class="nav-title">DeepSeek</view>
+        <view class="nav-title">智能助手</view>
         <view class="nav-right"></view>
       </view>
     </view>
     <view class="welcome">
       <view class="intro">
-        <text class="intro-title">我是 DeepSeek，很高兴见到你！</text>
+        <text class="intro-title">我是智能助手，很高兴见到你！</text>
         <text class="intro-sub">我可以帮你写代码、读文件、写作各种创意内容，请把你的任务交给我吧~</text>
       </view>
     </view>
@@ -22,7 +22,7 @@
         class="input textarea"
         v-model="inputValue"
         :disabled="isSending"
-        placeholder="给 DeepSeek 发送消息"
+        placeholder="给 智能助手 发送消息"
         auto-height
         cursor-spacing="8"
         maxlength="-1"
